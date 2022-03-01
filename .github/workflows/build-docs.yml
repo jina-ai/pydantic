@@ -20,7 +20,7 @@ jobs:
         run: python3.7 -m pip install mkdocs-material
       - name: Build Docs
         run: |
-          make install-docs
+          make install
           make docs
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1.5
