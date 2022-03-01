@@ -12,16 +12,6 @@
 {{ super() }}
 <!-- DocsQA integration start -->
 <script src="https://jina-docqa-ui.netlify.app/dist/qabot.js"></script>
-<script>
-  // This prevents the global search interfere with qa-bot internal text input.
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('qa-bot').forEach((x) => {
-      x.addEventListener('keydown', (event) => {
-        event.stopPropagation();
-      });
-    });
-  });
-</script>
 <qa-bot 
   server="https://samuelcolvin-pydantic.docsqa.jina.ai"
   theme="infer" 
