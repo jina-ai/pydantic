@@ -1,0 +1,38 @@
+name: Build Docs
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.7"
+      - name: Install Flit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: python3.7 -m pip install flit
+      - name: Install docs extras
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: python3.7 -m flit install --extras doc
+      - name: Install Material for MkDocs Insiders
+        run: python3.7 -m pip install mkdocs-material
+      - name: Build Docs
+        run: python3.7 -m mkdocs build
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1.5
+        with:
+          publish-dir: './site'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-commit-comment: false
+          alias: typer
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
