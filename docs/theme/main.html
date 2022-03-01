@@ -7,3 +7,36 @@
   {% endif %}
   {{ super() }}
 {% endblock %}
+
+{%- block scripts %}
+{{ super() }}
+<!-- DocsQA integration start -->
+<script src="https://cdn.jsdelivr.net/npm/qabot@0.4"></script>
+<script>
+  // This prevents the global search interfere with qa-bot internal text input.
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('qa-bot').forEach((x) => {
+      x.addEventListener('keydown', (event) => {
+        event.stopPropagation();
+      });
+    });
+  });
+</script>
+<qa-bot 
+  server="https://samuelcolvin-pydantic.docsqa.jina.ai"
+  theme="infer" 
+  title="Pydantic Bot"
+  description="A modern fast web framework for building APIs in Python"
+  style="font-size: 0.8rem"
+>
+  <template>
+      <dl>
+          <dt>You can ask questions about Pydantic. Try</dt>
+          <dd>What is Pydantic?</dd>
+          <dd>How fast is Pydantic?</dd>
+          <dd>How to define a schema?</dd>
+      </dl>
+  </template>
+</qa-bot>
+<!-- DocsQA integration end -->
+{%- endblock %}
