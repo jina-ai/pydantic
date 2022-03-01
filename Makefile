@@ -122,7 +122,7 @@ clean:
 
 .PHONY: docs
 docs:
-	flake8 --max-line-length=80 docs/examples/
+	# flake8 --max-line-length=80 docs/examples/
 	python docs/build/main.py
 	mkdocs build
 
