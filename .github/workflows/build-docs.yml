@@ -19,7 +19,9 @@ jobs:
       - name: Install Material for MkDocs Insiders
         run: python3.7 -m pip install mkdocs-material
       - name: Build Docs
-        run: make docs
+        run: |
+          make install-docs
+          make docs
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1.5
         with:
